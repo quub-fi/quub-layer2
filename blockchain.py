@@ -36,7 +36,12 @@ class Blockchain:
         
         Returns:
             The latest block
+            
+        Raises:
+            IndexError: If the chain is empty
         """
+        if not self.chain:
+            raise IndexError("Cannot get latest block from empty chain")
         return self.chain[-1]
     
     def add_transaction(self, transaction: Dict[str, Any]) -> None:

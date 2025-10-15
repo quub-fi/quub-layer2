@@ -23,14 +23,15 @@ class Block:
         timestamp: float,
         data: List[Dict[str, Any]],
         previous_hash: str,
-        nonce: int = 0
+        nonce: int = 0,
+        hash: Optional[str] = None
     ):
         self.index = index
         self.timestamp = timestamp
         self.data = data
         self.previous_hash = previous_hash
         self.nonce = nonce
-        self.hash = self.calculate_hash()
+        self.hash = hash if hash is not None else self.calculate_hash()
     
     def calculate_hash(self) -> str:
         """
@@ -87,12 +88,11 @@ class Block:
         Returns:
             Block instance
         """
-        block = Block(
+        return Block(
             index=block_dict['index'],
             timestamp=block_dict['timestamp'],
             data=block_dict['data'],
             previous_hash=block_dict['previous_hash'],
-            nonce=block_dict['nonce']
+            nonce=block_dict['nonce'],
+            hash=block_dict['hash']
         )
-        block.hash = block_dict['hash']
-        return block
