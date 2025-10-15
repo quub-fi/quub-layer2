@@ -1,0 +1,53 @@
+{
+    "name": "eth-layer2-lone",
+    "version": "1.0.0",
+    "description": "A Layer 2 Ethereum blockchain network with Optimistic rollup architecture",
+    "main": "index.js",
+    "scripts": {
+        "build": "npm run build:contracts && npm run build:sequencer && npm run build:sdk",
+        "build:contracts": "cd contracts && npx hardhat compile",
+        "build:sequencer": "cd sequencer && npm run build",
+        "build:sdk": "cd sdk && npm run build",
+        "test": "npm run test:contracts && npm run test:sequencer && npm run test:sdk",
+        "test:contracts": "cd contracts && npx hardhat test",
+        "test:sequencer": "cd sequencer && npm test",
+        "test:sdk": "cd sdk && npm test",
+        "start:sequencer": "cd sequencer && npm start",
+        "start:verifier": "cd verifier && npm start",
+        "deploy:local": "cd contracts && npx hardhat run scripts/deploy.js --network localhost",
+        "deploy:testnet": "cd contracts && npx hardhat run scripts/deploy.js --network goerli",
+        "clean": "npm run clean:contracts && npm run clean:build",
+        "clean:contracts": "cd contracts && npx hardhat clean",
+        "clean:build": "rm -rf */dist */build",
+        "dev": "concurrently \"npm run start:sequencer\" \"npm run start:verifier\"",
+        "setup": "npm install && npm run install:all",
+        "install:all": "cd contracts && npm install && cd ../sequencer && npm install && cd ../verifier && npm install && cd ../sdk && npm install && cd ../bridge && npm install"
+    },
+    "workspaces": [
+        "contracts",
+        "sequencer",
+        "verifier",
+        "sdk",
+        "bridge",
+        "data-availability"
+    ],
+    "keywords": [
+        "ethereum",
+        "layer2",
+        "rollup",
+        "optimistic",
+        "blockchain",
+        "scaling"
+    ],
+    "author": "Layer 2 Development Team",
+    "license": "MIT",
+    "devDependencies": {
+        "concurrently": "^9.2.1",
+        "typescript": "^5.7.3",
+        "@types/node": "^24.7.2"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
+    }
+}
