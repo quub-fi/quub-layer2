@@ -1,0 +1,107 @@
+@startuml Fraud Detection Flow
+title Fraud Proof Challenge Process
+
+actor Attacker as "Malicious\nSequencer"
+participant "OptimisticRollup\n(L1)" as Rollup
+actor Verifier as "Honest\nVerifier"
+participant "Verifier\nService" as VerifierSvc
+participant "Fraud Proof\nGenerator" as FraudProof
+participant "Data\nAvailability" as DA
+
+== Fraudulent State Submission ==
+Attacker -> Rollup: commitState(fraudulentRoot)
+activate Rollup
+Rollup -> Rollup: Create StateCommitment
+Rollup -> Rollup: Set 7-day challenge period
+Rollup --> Attacker: State committed
+deactivate Rollup
+
+note right of Attacker
+  Attacker submits incorrect
+  state root hoping no one
+  will notice within 7 days
+end note
+
+== Verification Process ==
+VerifierSvc -> Rollup: Monitor new commitments
+activate VerifierSvc
+Rollup --> VerifierSvc: New commitment detected
+
+VerifierSvc -> DA: getBatchData(batchId)
+activate DA
+DA --> VerifierSvc: [tx1, tx2, ..., tx100]
+deactivate DA
+
+VerifierSvc -> VerifierSvc: Re-execute all transactions
+activate VerifierSvc #LightBlue
+loop For each transaction
+    VerifierSvc -> VerifierSvc: Execute transaction
+    VerifierSvc -> VerifierSvc: Update local state
+end
+VerifierSvc -> VerifierSvc: Compute local state root
+deactivate VerifierSvc
+
+alt State roots match
+    VerifierSvc -> VerifierSvc: No action needed
+    note right: State is valid ✓
+else State roots don't match (FRAUD DETECTED!)
+    VerifierSvc -> FraudProof: generateProof(batchId)
+    activate FraudProof
+    FraudProof -> FraudProof: Identify first invalid tx
+    FraudProof -> FraudProof: Create pre-state proof
+    FraudProof -> FraudProof: Create post-state proof
+    FraudProof -> FraudProof: Generate transition proof
+    FraudProof --> VerifierSvc: fraudProof
+    deactivate FraudProof
+    
+    VerifierSvc -> Verifier: Alert: Fraud detected!
+    deactivate VerifierSvc
+end
+
+== Challenge Submission ==
+Verifier -> Verifier: Prepare challenge bond (1 ETH)
+Verifier -> Rollup: challengeState(\n  commitmentIndex,\n  preStateRoot,\n  postStateRoot,\n  transitionProof\n) + 1 ETH bond
+activate Rollup
+Rollup -> Rollup: Verify challenge period active
+Rollup -> Rollup: Accept challenge bond
+Rollup -> Rollup: Create FraudProof record
+
+== Proof Verification ==
+Rollup -> Rollup: Verify pre-state matches
+Rollup -> Rollup: Execute transition
+Rollup -> Rollup: Verify post-state
+
+alt Fraud proven (proof valid)
+    Rollup -> Rollup: Mark state as fraudulent
+    Rollup -> Rollup: Slash attacker's bond (10 ETH)
+    Rollup -> Rollup: Reward verifier (11 ETH)
+    Rollup -> Rollup: Revert to previous valid state
+    Rollup --> Verifier: Challenge successful!\n+ 11 ETH reward
+    Rollup --> Attacker: Bond slashed! -10 ETH
+    
+    note left of Attacker
+      Attacker loses everything:
+      - 10 ETH bond slashed
+      - Gas fees wasted
+      - Reputation destroyed
+      Attack was not profitable!
+    end note
+    
+else Fraud proof invalid
+    Rollup -> Rollup: Challenge rejected
+    Rollup -> Rollup: Slash verifier's bond (1 ETH)
+    Rollup -> Rollup: Reward sequencer (1 ETH)
+    Rollup --> Verifier: Challenge failed! -1 ETH
+    Rollup --> Attacker: Defended! +1 ETH
+end
+
+deactivate Rollup
+
+== Finalization (If No Valid Challenges) ==
+note over Rollup
+  After 7 days, if no valid
+  challenges, state becomes final
+  and withdrawals can be processed
+end note
+
+@enduml

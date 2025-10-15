@@ -1,0 +1,105 @@
+@startuml Withdrawal Flow
+title Withdrawal Flow (L2 → L1)
+
+actor User
+participant "L2 Sequencer" as L2
+participant "State\nManager" as State
+participant "OptimisticRollup\n(L1)" as Rollup
+participant "L1Bridge\n(L1)" as Bridge
+participant "User Wallet" as Wallet
+
+== Withdrawal Request ==
+User -> L2: Request withdrawal\n(0.5 ETH)
+activate L2
+L2 -> L2: Create withdrawal tx
+L2 -> State: processWithdrawal(user, 0.5 ETH)
+activate State
+State -> State: Validate user balance
+State -> State: Deduct from L2 balance
+State -> State: Mark as pending withdrawal
+State --> L2: Withdrawal queued
+deactivate State
+L2 --> User: Withdrawal initiated
+deactivate L2
+
+note right of User
+  Withdrawal is included
+  in next L2 batch
+end note
+
+== Batch Processing ==
+L2 -> L2: Include withdrawal in batch
+L2 -> State: processBatch(txs + withdrawal)
+activate State
+State -> State: Execute all transactions
+State -> State: Process withdrawal
+State -> State: Generate Merkle proof
+State -> State: Update state root
+State --> L2: stateRoot + merkleProof
+deactivate State
+
+== State Commitment to L1 ==
+L2 -> Rollup: commitState(stateRoot)
+activate Rollup
+Rollup -> Rollup: Store commitment
+Rollup -> Rollup: Start challenge period
+Rollup --> L2: Commitment recorded
+deactivate Rollup
+
+== Initiate Withdrawal on L1 ==
+L2 -> Bridge: initiateWithdrawal(\n  user,\n  0.5 ETH,\n  merkleProof\n)
+activate Bridge
+Bridge -> Bridge: Verify caller is rollup
+Bridge -> Bridge: Create WithdrawalRecord
+Bridge -> Bridge: Store merkle proof
+Bridge -> Bridge: Set withdrawal delay (7 days)
+Bridge --> L2: Withdrawal initiated on L1
+deactivate Bridge
+
+note over User, Rollup
+  ⏳ 7-DAY CHALLENGE PERIOD ⏳
+  Anyone can challenge the state
+  if they believe it's fraudulent
+end note
+
+== Challenge Period ==
+... 7 days pass ...
+
+alt Challenge submitted and proven
+    note over Rollup
+      If fraud is proven:
+      - State is reverted
+      - Withdrawal is cancelled
+      - User must retry
+    end note
+else No valid challenges
+    Rollup -> Rollup: Finalize state
+    note right: State is now final ✓
+end
+
+== Complete Withdrawal ==
+User -> Bridge: completeWithdrawal(\n  withdrawalId\n)
+activate Bridge
+Bridge -> Rollup: isStateFinalized(commitmentIndex)
+activate Rollup
+Rollup --> Bridge: true (finalized after 7 days)
+deactivate Rollup
+
+Bridge -> Bridge: Verify withdrawal delay passed
+Bridge -> Bridge: Verify not already processed
+Bridge -> Bridge: Mark as processed
+Bridge -> Wallet: transfer(0.5 ETH)
+activate Wallet
+Wallet --> User: 0.5 ETH received! ✓
+deactivate Wallet
+Bridge --> User: Withdrawal complete!
+deactivate Bridge
+
+note left of User
+  User successfully withdrew:
+  - 0.5 ETH from L2 to L1
+  - Waited 7 days for finality
+  - Funds are secure on L1
+end note
+
+@enduml

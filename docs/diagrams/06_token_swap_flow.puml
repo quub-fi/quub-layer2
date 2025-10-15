@@ -1,0 +1,82 @@
+@startuml Token Deposit and Swap
+title ERC20 Token Deposit and DEX Swap on L2
+
+actor User
+participant "User Wallet" as Wallet
+participant "ERC20 Token\n(L1)" as Token
+participant "L1Bridge" as Bridge
+participant "L2 Sequencer" as Sequencer
+participant "L2 DEX" as DEX
+participant "L2 State" as State
+
+== Token Approval ==
+User -> Wallet: Approve L1Bridge\nto spend 100 USDC
+Wallet -> Token: approve(bridge, 100 USDC)
+activate Token
+Token -> Token: Set allowance
+Token --> Wallet: Approval confirmed
+deactivate Token
+
+== Token Deposit ==
+User -> Wallet: Deposit 100 USDC to L2
+Wallet -> Bridge: depositToken(\n  USDC_address,\n  100 USDC\n)
+activate Bridge
+Bridge -> Bridge: Verify token is supported
+Bridge -> Token: transferFrom(\n  user,\n  bridge,\n  100 USDC\n)
+activate Token
+Token -> Token: Transfer tokens
+Token --> Bridge: Transfer successful
+deactivate Token
+
+Bridge -> Bridge: Create DepositRecord
+Bridge -> Bridge: Emit DepositInitiated event
+Bridge --> Wallet: Deposit confirmed
+deactivate Bridge
+
+== L2 Credit ==
+Sequencer -> Bridge: Listen for events
+Bridge --> Sequencer: DepositInitiated(user, 100 USDC)
+Sequencer -> State: creditAccount(user, 100 USDC)
+activate State
+State -> State: Update balance
+State --> Sequencer: Balance updated
+deactivate State
+Sequencer --> User: L2 balance: 100 USDC
+
+== DEX Swap on L2 ==
+User -> DEX: Swap 100 USDC → ETH
+activate DEX
+DEX -> State: getUserBalance(user, USDC)
+State --> DEX: 100 USDC
+
+DEX -> DEX: Calculate swap:\n100 USDC → 0.03 ETH
+DEX -> DEX: Apply 0.3% fee:\n0.0001 ETH fee
+
+DEX -> State: deductBalance(\n  user,\n  USDC,\n  100\n)
+activate State
+State -> State: user.USDC -= 100
+State --> DEX: Balance updated
+deactivate State
+
+DEX -> State: addBalance(\n  user,\n  ETH,\n  0.0299\n)
+activate State
+State -> State: user.ETH += 0.0299
+State --> DEX: Balance updated
+deactivate State
+
+DEX -> DEX: Update liquidity pools
+DEX --> User: Swap complete!\nReceived 0.0299 ETH
+
+note right of User
+  Total fees paid:
+  - L1 deposit: ~$5 (one time)
+  - L2 swap: $0.001 (instant)
+  
+  vs. L1 direct swap: ~$50+
+  
+  Savings: 90%+ on fees!
+end note
+
+deactivate DEX
+
+@enduml

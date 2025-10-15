@@ -1,0 +1,41 @@
+@startuml Deposit Flow
+title ETH Deposit Flow (L1 → L2)
+
+actor User
+participant "User Wallet" as Wallet
+participant "L1Bridge\n(Ethereum)" as Bridge
+participant "Ethereum\nBlockchain" as L1
+participant "Sequencer\nService" as Sequencer
+participant "L2 State\nManager" as L2State
+
+== Deposit Initiation ==
+User -> Wallet: Deposit 1 ETH to L2
+Wallet -> Bridge: depositETH() + 1 ETH
+activate Bridge
+Bridge -> Bridge: Validate amount > 0
+Bridge -> Bridge: Create DepositRecord
+Bridge -> Bridge: Increment depositCounter
+Bridge -> L1: Emit DepositInitiated event
+deactivate Bridge
+L1 --> Wallet: Transaction confirmed
+
+== L2 Credit ==
+Sequencer -> L1: Listen for DepositInitiated events
+activate Sequencer
+L1 --> Sequencer: DepositInitiated(user, 1 ETH)
+Sequencer -> L2State: creditAccount(user, 1 ETH)
+activate L2State
+L2State -> L2State: Update user balance
+L2State -> L2State: Update state trie
+L2State --> Sequencer: Balance updated
+deactivate L2State
+Sequencer --> User: L2 balance: 1 ETH
+deactivate Sequencer
+
+note right of User
+  User can now transact
+  on L2 with instant
+  confirmations and low fees
+end note
+
+@enduml

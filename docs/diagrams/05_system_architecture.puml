@@ -1,0 +1,139 @@
+@startuml Complete System Architecture
+title Quub Layer 2 - Complete System Architecture
+
+!define RECTANGLE class
+
+package "User Layer" {
+    actor User
+    component [Web Wallet] as Wallet
+    component [DApp Frontend] as DApp
+}
+
+package "Layer 2 (Off-Chain)" {
+    component [Sequencer Service] as Sequencer {
+        component [API Server] as API
+        component [Transaction Pool] as TxPool
+        component [Batch Processor] as BatchProc
+        component [State Manager] as StateMgr
+        component [Rollup Submitter] as Submitter
+    }
+    
+    component [Verifier Service] as Verifier {
+        component [State Monitor] as Monitor
+        component [Fraud Detector] as FraudDet
+        component [Proof Generator] as ProofGen
+    }
+    
+    database "Data Availability" as DA {
+        component [Level DB] as LevelDB
+        component [IPFS] as IPFS
+    }
+}
+
+package "Layer 1 (Ethereum)" {
+    component [L1Bridge Contract] as Bridge {
+        component [Deposit Handler] as DepositH
+        component [Withdrawal Handler] as WithdrawH
+        component [Token Manager] as TokenMgr
+    }
+    
+    component [OptimisticRollup Contract] as Rollup {
+        component [State Manager] as StateL1
+        component [Challenge Handler] as ChallengeH
+        component [Bond Manager] as BondMgr
+        component [Finalization] as Final
+    }
+    
+    database [Ethereum Blockchain] as L1Chain
+}
+
+package "Developer Tools" {
+    component [SDK] as SDK
+    component [Block Explorer] as Explorer
+    component [Monitoring Dashboard] as Dashboard
+}
+
+' User interactions
+User --> Wallet
+User --> DApp
+Wallet --> SDK
+DApp --> SDK
+
+' SDK interactions
+SDK --> API : Submit transactions
+SDK --> Bridge : Deposits
+SDK --> Bridge : Withdrawals
+SDK --> Explorer : Query data
+
+' Sequencer flow
+API --> TxPool : Add transactions
+TxPool --> BatchProc : Get batch
+BatchProc --> StateMgr : Execute txs
+StateMgr --> DA : Store state
+StateMgr --> Submitter : Submit state root
+Submitter --> Rollup : Commit state
+
+' Bridge interactions
+Bridge --> L1Chain : Store deposits
+Bridge <--> Rollup : Verify states
+DepositH --> L1Chain : Emit events
+WithdrawH <-- Rollup : Check finality
+
+' Rollup interactions
+Rollup --> L1Chain : Store commitments
+StateL1 --> L1Chain : State roots
+ChallengeH --> L1Chain : Fraud proofs
+BondMgr --> L1Chain : Manage bonds
+Final --> L1Chain : Finalize states
+
+' Verifier flow
+Monitor --> L1Chain : Watch commitments
+Monitor --> DA : Fetch batch data
+FraudDet --> StateMgr : Re-execute
+FraudDet --> ProofGen : Generate proof
+ProofGen --> ChallengeH : Submit challenge
+
+' Data availability
+DA --> IPFS : Replicate
+DA --> LevelDB : Cache
+
+' Monitoring
+Dashboard --> L1Chain : Read events
+Dashboard --> API : Query metrics
+Dashboard --> DA : Check health
+
+note right of Sequencer
+  **Sequencer Responsibilities:**
+  - Accept user transactions
+  - Order and batch txs
+  - Execute state transitions
+  - Submit state roots to L1
+  - Provide data availability
+end note
+
+note right of Verifier
+  **Verifier Responsibilities:**
+  - Monitor state commitments
+  - Re-execute transactions
+  - Detect fraud
+  - Submit challenges
+  - Earn rewards
+end note
+
+note right of Bridge
+  **Bridge Security:**
+  - Reentrancy protection
+  - SafeERC20 transfers
+  - Owner access control
+  - Withdrawal delays
+end note
+
+note right of Rollup
+  **Rollup Security:**
+  - 7-day challenge period
+  - Bond requirements
+  - Fraud proof verification
+  - Economic incentives
+end note
+
+@enduml

@@ -1,0 +1,80 @@
+@startuml L2 Transaction Flow
+title Layer 2 Transaction Processing
+
+actor User
+participant "User Wallet" as Wallet
+participant "Sequencer API" as API
+participant "Transaction\nPool" as TxPool
+participant "Batch\nProcessor" as Batch
+participant "State\nManager" as State
+participant "Rollup\nSubmitter" as Submitter
+participant "OptimisticRollup\n(L1)" as Rollup
+
+== Transaction Submission ==
+User -> Wallet: Send 0.1 ETH to Bob
+Wallet -> Wallet: Sign transaction
+Wallet -> API: POST /tx\n{to: Bob, value: 0.1 ETH}
+activate API
+API -> API: Validate transaction format
+API -> TxPool: addTransaction(tx)
+activate TxPool
+TxPool -> TxPool: Generate tx hash
+TxPool -> TxPool: Add to pending queue
+TxPool --> API: txHash: 0xabc...
+deactivate TxPool
+API --> Wallet: {"txHash": "0xabc...", "status": "pending"}
+deactivate API
+
+== Batch Processing (Every 10 seconds) ==
+Batch -> TxPool: getTransactionsForBatch(100)
+activate Batch
+activate TxPool
+TxPool --> Batch: [tx1, tx2, ..., tx100]
+deactivate TxPool
+
+loop For each transaction
+    Batch -> State: executeTransaction(tx)
+    activate State
+    State -> State: Load account states
+    State -> State: Validate tx (balance, nonce)
+    State -> State: Update sender balance
+    State -> State: Update recipient balance
+    State -> State: Update state trie
+    State --> Batch: receipt
+    deactivate State
+end
+
+Batch -> State: getCurrentStateRoot()
+activate State
+State -> State: Compute Merkle root
+State --> Batch: stateRoot: 0x123...
+deactivate State
+
+== State Submission to L1 ==
+Batch -> Submitter: submitStateRoot(0x123...)
+activate Submitter
+Submitter -> Rollup: commitState(0x123...)
+activate Rollup
+Rollup -> Rollup: Verify sequencer has bond
+Rollup -> Rollup: Create StateCommitment
+Rollup -> Rollup: Start 7-day challenge period
+Rollup --> Submitter: State committed
+deactivate Rollup
+Submitter --> Batch: L1 tx confirmed
+deactivate Submitter
+
+Batch -> TxPool: markTransactionsProcessed([tx1...tx100])
+activate TxPool
+TxPool -> TxPool: Update tx statuses
+TxPool --> Batch: Done
+deactivate TxPool
+deactivate Batch
+
+note right of User
+  User's transaction is:
+  - Confirmed on L2 (instant)
+  - Submitted to L1 (in batch)
+  - Finalizes after 7 days
+end note
+
+@enduml
