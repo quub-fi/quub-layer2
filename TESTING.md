@@ -5,6 +5,7 @@ This guide will walk you through testing the Layer 2 blockchain project.
 ## 📋 Prerequisites
 
 Before running tests, ensure you have:
+
 - Node.js v24.10.0 (installed ✅)
 - npm dependencies (installed ✅)
 
@@ -46,6 +47,7 @@ npx hardhat coverage
 Located in: `contracts/test/OptimisticRollup.test.js`
 
 **Test Suites:**
+
 1. **Initialization** - Verifies contract setup
 2. **State Commitment** - Tests state root submissions
 3. **Fraud Proofs** - Tests challenge mechanism
@@ -53,6 +55,7 @@ Located in: `contracts/test/OptimisticRollup.test.js`
 5. **Bond Management** - Tests bond deposits and withdrawals
 
 **Key Test Cases:**
+
 - ✅ Sequencer can commit state with sufficient bond
 - ✅ Non-sequencer cannot commit state
 - ✅ Challenge can be submitted during challenge period
@@ -65,6 +68,7 @@ Located in: `contracts/test/OptimisticRollup.test.js`
 Located in: `contracts/test/L1Bridge.test.js`
 
 **Test Suites:**
+
 1. **Initialization** - Verifies bridge setup
 2. **ETH Deposits** - Tests ETH deposits to L2
 3. **Token Support** - Tests ERC20 token deposits
@@ -72,6 +76,7 @@ Located in: `contracts/test/L1Bridge.test.js`
 5. **Access Control** - Tests permission system
 
 **Key Test Cases:**
+
 - ✅ Users can deposit ETH
 - ✅ Zero deposits are rejected
 - ✅ Owner can add supported tokens
@@ -147,7 +152,7 @@ If tests timeout, increase the timeout in hardhat.config.js:
 
 ```javascript
 mocha: {
-  timeout: 100000 // 100 seconds
+  timeout: 100000; // 100 seconds
 }
 ```
 
@@ -252,11 +257,13 @@ await rollup.depositBond({ value: ethers.parseEther("1.0") });
 ### Writing New Tests
 
 1. **Follow AAA Pattern:**
+
    - **Arrange**: Set up test conditions
    - **Act**: Execute the function being tested
    - **Assert**: Verify expected outcomes
 
 2. **Use Descriptive Names:**
+
    ```javascript
    it("Should reject withdrawal without sufficient delay", async function () {
      // Test code
@@ -264,6 +271,7 @@ await rollup.depositBond({ value: ethers.parseEther("1.0") });
    ```
 
 3. **Test Edge Cases:**
+
    - Zero values
    - Maximum values
    - Boundary conditions
@@ -283,16 +291,19 @@ await rollup.depositBond({ value: ethers.parseEther("1.0") });
 After all tests pass:
 
 1. **Review Coverage Report**
+
    ```bash
    npx hardhat coverage
    ```
 
 2. **Run Gas Analysis**
+
    ```bash
    REPORT_GAS=true npx hardhat test
    ```
 
 3. **Deploy to Testnet**
+
    ```bash
    npx hardhat run scripts/deploy.js --network sepolia
    ```

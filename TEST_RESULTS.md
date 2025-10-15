@@ -2,10 +2,10 @@
 
 ## ✅ All Tests Passing!
 
-**Date**: October 15, 2025  
-**Total Tests**: 27  
-**Passing**: 27 ✅  
-**Failing**: 0  
+**Date**: October 15, 2025
+**Total Tests**: 27
+**Passing**: 27 ✅
+**Failing**: 0
 **Duration**: 488ms
 
 ---
@@ -15,25 +15,30 @@
 ### L1Bridge Contract (13 tests)
 
 #### ✅ Initialization (3 tests)
+
 - ✔ Should set the correct rollup contract
 - ✔ Should set the correct withdrawal delay
 - ✔ Should set the correct owner
 
 #### ✅ ETH Deposits (3 tests)
+
 - ✔ Should allow depositing ETH
 - ✔ Should reject zero ETH deposits
 - ✔ Should increment deposit counter
 
 #### ✅ Token Support (3 tests)
+
 - ✔ Should allow owner to add supported token
 - ✔ Should allow depositing supported tokens
 - ✔ Should reject unsupported tokens
 
 #### ✅ Withdrawals (2 tests)
+
 - ✔ Should allow rollup contract to initiate withdrawal
 - ✔ Should reject withdrawal from non-rollup address
 
 #### ✅ Access Control (2 tests)
+
 - ✔ Should only allow owner to add supported tokens
 - ✔ Should only allow owner to update rollup contract
 
@@ -42,26 +47,31 @@
 ### OptimisticRollup Contract (14 tests)
 
 #### ✅ Initialization (4 tests)
+
 - ✔ Should set the correct sequencer
 - ✔ Should set the correct challenge period
 - ✔ Should set the correct bond amount
 - ✔ Should set the correct owner
 
 #### ✅ State Commitment (3 tests)
+
 - ✔ Should allow sequencer to commit state
 - ✔ Should reject commitment from non-sequencer
 - ✔ Should reject commitment without sufficient bond
 
 #### ✅ Fraud Proofs (3 tests)
+
 - ✔ Should allow challenging a state commitment
 - ✔ Should reject challenge without sufficient bond
 - ✔ Should reject challenge after challenge period
 
 #### ✅ State Finalization (2 tests)
+
 - ✔ Should finalize state after challenge period
 - ✔ Should not finalize state before challenge period
 
 #### ✅ Bond Management (2 tests)
+
 - ✔ Should allow depositing bond
 - ✔ Should allow withdrawing bond
 
@@ -70,6 +80,7 @@
 ## Fixed Issues
 
 ### 🔴 Critical Fixes
+
 1. ✅ Added missing `IERC20` and `SafeERC20` imports
 2. ✅ Fixed OpenZeppelin v5 compatibility (ReentrancyGuard path, Ownable constructor)
 3. ✅ Updated Solidity version from 0.8.19 to 0.8.20
@@ -77,6 +88,7 @@
 5. ✅ Fixed `Ownable` initialization requiring `initialOwner` parameter
 
 ### 🟠 High Priority Fixes
+
 1. ✅ Created comprehensive test suite for L1Bridge
 2. ✅ Created comprehensive test suite for OptimisticRollup
 3. ✅ Added deployment scripts
@@ -84,6 +96,7 @@
 5. ✅ Installed and configured `@openzeppelin/hardhat-upgrades`
 
 ### 🟡 Medium Priority Fixes
+
 1. ✅ Replaced deprecated Goerli with Sepolia testnet
 2. ✅ Created `.env.example` for configuration
 3. ✅ Added `TESTING.md` documentation

@@ -163,7 +163,7 @@ contract OptimisticRollup is Initializable, OwnableUpgradeable, ReentrancyGuardU
     function finalizeState(uint256 _index) external {
         require(_index < currentCommitmentIndex, "Invalid commitment index");
         StateCommitment storage commitment = stateCommitments[_index];
-        
+
         require(!commitment.finalized, "State already finalized");
         require(
             block.timestamp > commitment.timestamp + challengePeriod,
