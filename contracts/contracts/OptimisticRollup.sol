@@ -158,6 +158,23 @@ contract OptimisticRollup is Initializable, OwnableUpgradeable, ReentrancyGuardU
     }
 
     /**
+     * @dev Finalize a single state commitment after challenge period
+     */
+    function finalizeState(uint256 _index) external {
+        require(_index < currentCommitmentIndex, "Invalid commitment index");
+        StateCommitment storage commitment = stateCommitments[_index];
+        
+        require(!commitment.finalized, "State already finalized");
+        require(
+            block.timestamp > commitment.timestamp + challengePeriod,
+            "Challenge period not expired"
+        );
+
+        commitment.finalized = true;
+        emit StateFinalized(_index, commitment.stateRoot);
+    }
+
+    /**
      * @dev Deposit bond for sequencer
      */
     function depositBond() external payable {
@@ -171,6 +188,16 @@ contract OptimisticRollup is Initializable, OwnableUpgradeable, ReentrancyGuardU
         require(bonds[msg.sender] >= _amount, "Insufficient bond balance");
         bonds[msg.sender] -= _amount;
         payable(msg.sender).transfer(_amount);
+    }
+
+    /**
+     * @dev Withdraw all bond (convenience function)
+     */
+    function withdrawBond() external nonReentrant {
+        uint256 amount = bonds[msg.sender];
+        require(amount > 0, "No bond to withdraw");
+        bonds[msg.sender] = 0;
+        payable(msg.sender).transfer(amount);
     }
 
     /**

@@ -21,8 +21,8 @@ module.exports = {
             url: "http://127.0.0.1:8545",
             chainId: 1337
         },
-        goerli: {
-            url: process.env.GOERLI_URL || "",
+        sepolia: {
+            url: process.env.SEPOLIA_URL || "",
             accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : []
         },
         mainnet: {

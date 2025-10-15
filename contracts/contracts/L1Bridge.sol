@@ -3,12 +3,15 @@ pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title L1Bridge
  * @dev Bridge contract for L1-L2 asset transfers
  */
 contract L1Bridge is Ownable, ReentrancyGuard {
+    using SafeERC20 for IERC20;
     struct DepositRecord {
         address user;
         uint256 amount;
@@ -70,8 +73,8 @@ contract L1Bridge is Ownable, ReentrancyGuard {
         require(supportedTokens[_token], "Token not supported");
         require(_amount > 0, "Amount must be greater than 0");
 
-        // Transfer tokens from user to bridge
-        IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+        // Transfer tokens from user to bridge using SafeERC20
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
 
         deposits[depositCounter] = DepositRecord({
             user: msg.sender,
@@ -161,6 +164,13 @@ contract L1Bridge is Ownable, ReentrancyGuard {
      * @dev Set rollup contract address
      */
     function setRollupContract(address _newRollup) external onlyOwner {
+        rollupContract = _newRollup;
+    }
+
+    /**
+     * @dev Update rollup contract address (alias for setRollupContract)
+     */
+    function updateRollupContract(address _newRollup) external onlyOwner {
         rollupContract = _newRollup;
     }
 
