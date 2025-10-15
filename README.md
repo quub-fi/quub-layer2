@@ -1,4 +1,4 @@
-# ETH Layer 2 Lone
+# Quub Layer 2
 
 A complete Layer 2 Ethereum blockchain network implementation featuring an Optimistic Rollup architecture.
 
