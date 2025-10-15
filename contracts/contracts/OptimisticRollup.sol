@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 /**
  * @title OptimisticRollup
@@ -54,7 +54,7 @@ contract OptimisticRollup is Initializable, OwnableUpgradeable, ReentrancyGuardU
         uint256 _challengePeriod,
         uint256 _bondAmount
     ) public initializer {
-        __Ownable_init();
+        __Ownable_init(msg.sender);
         __ReentrancyGuard_init();
 
         sequencer = _sequencer;

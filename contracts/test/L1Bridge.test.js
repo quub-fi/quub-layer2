@@ -67,7 +67,7 @@ describe("L1Bridge", function () {
 
     beforeEach(async function () {
       // Deploy a mock ERC20 token
-      const MockERC20 = await ethers.getContractFactory("contracts/test/MockERC20.sol:MockERC20");
+      const MockERC20 = await ethers.getContractFactory("MockERC20");
       token = await MockERC20.deploy("Test Token", "TEST", ethers.parseEther("1000000"));
       await token.waitForDeployment();
 

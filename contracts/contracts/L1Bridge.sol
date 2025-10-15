@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -43,7 +43,7 @@ contract L1Bridge is Ownable, ReentrancyGuard {
     event WithdrawalInitiated(bytes32 indexed withdrawalId, address indexed user, uint256 amount, address token);
     event WithdrawalCompleted(bytes32 indexed withdrawalId, address indexed user, uint256 amount, address token);
 
-    constructor(address _rollupContract, uint256 _withdrawalDelay) {
+    constructor(address _rollupContract, uint256 _withdrawalDelay) Ownable(msg.sender) {
         rollupContract = _rollupContract;
         withdrawalDelay = _withdrawalDelay;
     }
@@ -187,10 +187,4 @@ contract L1Bridge is Ownable, ReentrancyGuard {
     function getWithdrawal(bytes32 _withdrawalId) external view returns (WithdrawalRecord memory) {
         return withdrawals[_withdrawalId];
     }
-}
-
-interface IERC20 {
-    function transfer(address to, uint256 amount) external returns (bool);
-    function transferFrom(address from, address to, uint256 amount) external returns (bool);
-    function balanceOf(address account) external view returns (uint256);
 }
