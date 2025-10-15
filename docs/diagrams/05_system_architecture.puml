@@ -17,13 +17,13 @@ package "Layer 2 (Off-Chain)" {
         component [State Manager] as StateMgr
         component [Rollup Submitter] as Submitter
     }
-    
+
     component [Verifier Service] as Verifier {
         component [State Monitor] as Monitor
         component [Fraud Detector] as FraudDet
         component [Proof Generator] as ProofGen
     }
-    
+
     database "Data Availability" as DA {
         component [Level DB] as LevelDB
         component [IPFS] as IPFS
@@ -36,14 +36,14 @@ package "Layer 1 (Ethereum)" {
         component [Withdrawal Handler] as WithdrawH
         component [Token Manager] as TokenMgr
     }
-    
+
     component [OptimisticRollup Contract] as Rollup {
         component [State Manager] as StateL1
         component [Challenge Handler] as ChallengeH
         component [Bond Manager] as BondMgr
         component [Finalization] as Final
     }
-    
+
     database [Ethereum Blockchain] as L1Chain
 }
 

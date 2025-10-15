@@ -1,6 +1,6 @@
 # 📋 Quub Layer 2 - Development TODO List
 
-> **Status**: ✅ Phase 1 Complete | 🚧 Phase 2-5 In Progress  
+> **Status**: ✅ Phase 1 Complete | 🚧 Phase 2-5 In Progress
 > **Last Updated**: October 16, 2025
 
 ---
@@ -21,6 +21,7 @@
 ## 🚧 **Phase 2: Core Infrastructure Development**
 
 ### **2.1 State Manager Implementation** 🔴 High Priority
+
 - [ ] Create `StateManager.ts` class
   - [ ] Implement Merkle Patricia Trie for state storage
   - [ ] Add state root calculation
@@ -30,6 +31,7 @@
   - [ ] Add state verification methods
 
 ### **2.2 Complete Sequencer Service** 🔴 High Priority
+
 - [ ] Implement missing `StateManager` class
 - [ ] Implement missing `RollupSubmitter` class
   - [ ] Create interface to L1 OptimisticRollup contract
@@ -43,6 +45,7 @@
 - [ ] Create health monitoring endpoints
 
 ### **2.3 Transaction Pool Enhancements** 🟡 Medium Priority
+
 - [ ] Add priority fee support (EIP-1559)
 - [ ] Implement transaction replacement (by nonce)
 - [ ] Add mempool size limits
@@ -51,6 +54,7 @@
 - [ ] Implement nonce gap handling
 
 ### **2.4 Batch Processor Improvements** 🟡 Medium Priority
+
 - [ ] Complete `TransactionReceipt` type definitions
 - [ ] Complete `Log` interface definitions
 - [ ] Add proper gas estimation
@@ -64,6 +68,7 @@
 ## 🚧 **Phase 3: Bridge Service Implementation**
 
 ### **3.1 Bridge API Server** 🔴 High Priority
+
 - [ ] Create Express.js server in `bridge/src/`
 - [ ] Implement deposit monitoring
   - [ ] Listen to L1Bridge deposit events
@@ -79,6 +84,7 @@
 - [ ] Implement bridge pause functionality (emergency)
 
 ### **3.2 Bridge Security** 🔴 High Priority
+
 - [ ] Add deposit address validation
 - [ ] Implement withdrawal signature verification
 - [ ] Add replay attack protection
@@ -91,6 +97,7 @@
 ## 🚧 **Phase 4: Data Availability Layer**
 
 ### **4.1 Data Availability Service** 🟡 Medium Priority
+
 - [ ] Implement DA service in `data-availability/src/`
 - [ ] Set up Level DB for transaction storage
 - [ ] Create batch data storage
@@ -100,6 +107,7 @@
 - [ ] Add redundancy/backup system
 
 ### **4.2 Data Availability Proofs** 🟢 Low Priority
+
 - [ ] Implement data availability sampling
 - [ ] Create erasure coding for data
 - [ ] Add commitment scheme
@@ -111,6 +119,7 @@
 ## 🚧 **Phase 5: Verifier Service**
 
 ### **5.1 Fraud Proof System** 🔴 High Priority
+
 - [ ] Implement verifier in `verifier/src/`
 - [ ] Create state transition verification
 - [ ] Implement fraud proof generation
@@ -120,6 +129,7 @@
 - [ ] Implement reward distribution for successful challenges
 
 ### **5.2 Verifier Infrastructure** 🟡 Medium Priority
+
 - [ ] Create verifier node setup
 - [ ] Add state snapshot comparison
 - [ ] Implement batch re-execution
@@ -131,6 +141,7 @@
 ## 🚧 **Phase 6: SDK Development**
 
 ### **6.1 Core SDK** 🟡 Medium Priority
+
 - [ ] Create TypeScript SDK in `sdk/src/`
 - [ ] Implement L2 provider
 - [ ] Add wallet integration
@@ -141,6 +152,7 @@
 - [ ] Add transaction status tracking
 
 ### **6.2 SDK Features** 🟢 Low Priority
+
 - [ ] Add batch transaction support
 - [ ] Create contract deployment helpers
 - [ ] Implement gas estimation
@@ -155,6 +167,7 @@
 ## 🚧 **Phase 7: Testing & Quality Assurance**
 
 ### **7.1 Integration Tests** 🔴 High Priority
+
 - [ ] Create end-to-end test suite
 - [ ] Test L1 → L2 deposit flow
 - [ ] Test L2 transaction processing
@@ -165,6 +178,7 @@
 - [ ] Create chaos engineering tests
 
 ### **7.2 Security Testing** 🔴 High Priority
+
 - [ ] Run Slither on smart contracts
 - [ ] Run Mythril security analysis
 - [ ] Perform fuzz testing
@@ -174,6 +188,7 @@
 - [ ] Perform gas optimization audit
 
 ### **7.3 Performance Testing** 🟡 Medium Priority
+
 - [ ] Benchmark transaction throughput
 - [ ] Test batch processing performance
 - [ ] Measure L1 gas costs
@@ -186,6 +201,7 @@
 ## 🚧 **Phase 8: Deployment & Operations**
 
 ### **8.1 Testnet Deployment** 🔴 High Priority
+
 - [ ] Deploy contracts to Sepolia testnet
   - [ ] Deploy OptimisticRollup
   - [ ] Deploy L1Bridge
@@ -198,6 +214,7 @@
 - [ ] Add testnet explorer integration
 
 ### **8.2 Infrastructure Setup** 🟡 Medium Priority
+
 - [ ] Set up AWS/GCP infrastructure
 - [ ] Configure load balancers
 - [ ] Set up monitoring (Prometheus/Grafana)
@@ -208,6 +225,7 @@
 - [ ] Add backup and disaster recovery
 
 ### **8.3 DevOps & Automation** 🟡 Medium Priority
+
 - [ ] Create Docker containers for all services
 - [ ] Add Kubernetes deployments
 - [ ] Create infrastructure as code (Terraform)
@@ -221,6 +239,7 @@
 ## 🚧 **Phase 9: Monitoring & Analytics**
 
 ### **9.1 Operational Monitoring** 🔴 High Priority
+
 - [ ] Create sequencer dashboard
 - [ ] Add transaction metrics
 - [ ] Monitor L1 gas costs
@@ -230,6 +249,7 @@
 - [ ] Add error rate tracking
 
 ### **9.2 Business Analytics** 🟢 Low Priority
+
 - [ ] Track daily active users
 - [ ] Monitor transaction volumes
 - [ ] Calculate total value locked (TVL)
@@ -243,6 +263,7 @@
 ## 🚧 **Phase 10: Documentation & Community**
 
 ### **10.1 Technical Documentation** 🟡 Medium Priority
+
 - [ ] Write architecture documentation
 - [ ] Create API reference
 - [ ] Add SDK documentation
@@ -252,6 +273,7 @@
 - [ ] Create security best practices guide
 
 ### **10.2 Developer Resources** 🟡 Medium Priority
+
 - [ ] Create tutorial series
 - [ ] Add code examples
 - [ ] Build sample applications
@@ -261,6 +283,7 @@
 - [ ] Add glossary of terms
 
 ### **10.3 Community Building** 🟢 Low Priority
+
 - [ ] Set up Discord server
 - [ ] Create Twitter account
 - [ ] Launch developer forum
@@ -274,6 +297,7 @@
 ## 🚧 **Phase 11: Security Audit & Mainnet Prep**
 
 ### **11.1 Professional Security Audit** 🔴 Critical
+
 - [ ] Select audit firm (Trail of Bits, OpenZeppelin, etc.)
 - [ ] Prepare codebase for audit
 - [ ] Submit for audit
@@ -283,6 +307,7 @@
 - [ ] Implement audit recommendations
 
 ### **11.2 Mainnet Preparation** 🔴 Critical
+
 - [ ] Final testnet stress testing
 - [ ] Create mainnet deployment plan
 - [ ] Prepare emergency procedures
@@ -292,6 +317,7 @@
 - [ ] Plan launch strategy
 
 ### **11.3 Mainnet Launch** 🔴 Critical
+
 - [ ] Deploy to Ethereum mainnet
 - [ ] Gradual rollout with limits
 - [ ] Monitor closely for 48 hours
@@ -305,6 +331,7 @@
 ## 🚧 **Phase 12: Advanced Features (Future)**
 
 ### **12.1 Enhanced Functionality** 🟢 Low Priority
+
 - [ ] Add EIP-4844 support (Proto-Danksharding)
 - [ ] Implement native account abstraction
 - [ ] Add multi-signature support
@@ -314,6 +341,7 @@
 - [ ] Add privacy features (ZK-rollup hybrid)
 
 ### **12.2 Ecosystem Expansion** 🟢 Low Priority
+
 - [ ] Build DeFi integrations
 - [ ] Add NFT marketplace support
 - [ ] Create gaming SDK
@@ -326,20 +354,20 @@
 
 ## 📊 **Progress Tracking**
 
-| Phase | Status | Completion | Priority |
-|-------|--------|------------|----------|
-| Phase 1: Foundation | ✅ Complete | 100% | ✅ Done |
-| Phase 2: Core Infrastructure | 🚧 Not Started | 0% | 🔴 High |
-| Phase 3: Bridge Service | 🚧 Not Started | 0% | 🔴 High |
-| Phase 4: Data Availability | 🚧 Not Started | 0% | 🟡 Medium |
-| Phase 5: Verifier Service | 🚧 Not Started | 0% | 🔴 High |
-| Phase 6: SDK Development | 🚧 Not Started | 0% | 🟡 Medium |
-| Phase 7: Testing & QA | 🚧 Not Started | 0% | 🔴 High |
-| Phase 8: Deployment | 🚧 Not Started | 0% | 🔴 High |
-| Phase 9: Monitoring | 🚧 Not Started | 0% | 🟡 Medium |
-| Phase 10: Documentation | 🚧 Not Started | 0% | 🟡 Medium |
-| Phase 11: Security Audit | 🚧 Not Started | 0% | 🔴 Critical |
-| Phase 12: Advanced Features | 🚧 Not Started | 0% | 🟢 Low |
+| Phase                        | Status         | Completion | Priority    |
+| ---------------------------- | -------------- | ---------- | ----------- |
+| Phase 1: Foundation          | ✅ Complete    | 100%       | ✅ Done     |
+| Phase 2: Core Infrastructure | 🚧 Not Started | 0%         | 🔴 High     |
+| Phase 3: Bridge Service      | 🚧 Not Started | 0%         | 🔴 High     |
+| Phase 4: Data Availability   | 🚧 Not Started | 0%         | 🟡 Medium   |
+| Phase 5: Verifier Service    | 🚧 Not Started | 0%         | 🔴 High     |
+| Phase 6: SDK Development     | 🚧 Not Started | 0%         | 🟡 Medium   |
+| Phase 7: Testing & QA        | 🚧 Not Started | 0%         | 🔴 High     |
+| Phase 8: Deployment          | 🚧 Not Started | 0%         | 🔴 High     |
+| Phase 9: Monitoring          | 🚧 Not Started | 0%         | 🟡 Medium   |
+| Phase 10: Documentation      | 🚧 Not Started | 0%         | 🟡 Medium   |
+| Phase 11: Security Audit     | 🚧 Not Started | 0%         | 🔴 Critical |
+| Phase 12: Advanced Features  | 🚧 Not Started | 0%         | 🟢 Low      |
 
 ---
 
@@ -348,23 +376,27 @@
 ### **Top 5 Priorities:**
 
 1. **🔴 Implement StateManager**
+
    - Critical for sequencer to function
    - Estimated time: 2-3 days
    - Dependencies: None
 
 2. **🔴 Complete Sequencer Service**
+
    - Implement RollupSubmitter
    - Fix TypeScript issues
    - Estimated time: 3-4 days
    - Dependencies: StateManager
 
 3. **🔴 Build Bridge Service**
+
    - Implement deposit monitoring
    - Create withdrawal API
    - Estimated time: 3-4 days
    - Dependencies: Sequencer
 
 4. **🔴 Create Integration Tests**
+
    - End-to-end flow testing
    - Estimated time: 2-3 days
    - Dependencies: Bridge, Sequencer
@@ -401,10 +433,11 @@ To contribute to this project:
 ## 📞 **Support**
 
 For questions or discussions:
+
 - GitHub Issues: https://github.com/quub-fi/quub-layer2/issues
 - Email: dev@quub.fi (if available)
 
 ---
 
-**Last Updated**: October 16, 2025  
+**Last Updated**: October 16, 2025
 **Next Review**: Weekly on Mondays

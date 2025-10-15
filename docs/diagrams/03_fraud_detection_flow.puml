@@ -53,7 +53,7 @@ else State roots don't match (FRAUD DETECTED!)
     FraudProof -> FraudProof: Generate transition proof
     FraudProof --> VerifierSvc: fraudProof
     deactivate FraudProof
-    
+
     VerifierSvc -> Verifier: Alert: Fraud detected!
     deactivate VerifierSvc
 end
@@ -78,7 +78,7 @@ alt Fraud proven (proof valid)
     Rollup -> Rollup: Revert to previous valid state
     Rollup --> Verifier: Challenge successful!\n+ 11 ETH reward
     Rollup --> Attacker: Bond slashed! -10 ETH
-    
+
     note left of Attacker
       Attacker loses everything:
       - 10 ETH bond slashed
@@ -86,7 +86,7 @@ alt Fraud proven (proof valid)
       - Reputation destroyed
       Attack was not profitable!
     end note
-    
+
 else Fraud proof invalid
     Rollup -> Rollup: Challenge rejected
     Rollup -> Rollup: Slash verifier's bond (1 ETH)

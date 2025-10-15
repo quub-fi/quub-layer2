@@ -12,7 +12,7 @@ Month 1: Core Infrastructure
 ├─ Week 3-4: Bridge Service
 └─ Week 4:   Basic integration tests
 
-Month 2: Complete L2 Stack  
+Month 2: Complete L2 Stack
 ├─ Week 1-2: Data Availability Layer
 ├─ Week 2-3: Verifier Service
 └─ Week 4:   SDK Development
@@ -33,6 +33,7 @@ Month 4: Security & Launch Prep
 ## 🚀 **This Week's Sprint**
 
 ### **Monday-Tuesday: StateManager**
+
 ```typescript
 // Goal: Create state management system
 ✓ Implement Merkle Patricia Trie
@@ -42,6 +43,7 @@ Month 4: Security & Launch Prep
 ```
 
 ### **Wednesday-Thursday: Sequencer**
+
 ```typescript
 // Goal: Complete sequencer service
 ✓ Implement RollupSubmitter
@@ -51,6 +53,7 @@ Month 4: Security & Launch Prep
 ```
 
 ### **Friday: Bridge Setup**
+
 ```typescript
 // Goal: Start bridge service
 ✓ Create Express server
@@ -63,18 +66,21 @@ Month 4: Security & Launch Prep
 ## 📦 **Deliverables Checklist**
 
 ### **Week 1 (Current)**
+
 - [ ] StateManager implementation
 - [ ] RollupSubmitter class
 - [ ] Fix TypeScript issues
 - [ ] Unit tests for new components
 
 ### **Week 2**
+
 - [ ] Complete Bridge Service
 - [ ] Integration tests
 - [ ] Deploy to local testnet
 - [ ] Basic monitoring
 
 ### **Week 3-4**
+
 - [ ] Data Availability service
 - [ ] Verifier service skeleton
 - [ ] SDK v0.1
@@ -97,16 +103,19 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## 💰 **Resource Requirements**
 
 ### **Team Size**
+
 - **Minimum**: 1 full-stack developer (4 months)
 - **Optimal**: 2-3 developers (2 months)
 - **Recommended**: 3 developers + 1 security expert (1.5 months)
 
 ### **Roles Needed**
+
 1. **Smart Contract Developer** - Focus on L1 contracts
 2. **Backend Developer** - Focus on sequencer/bridge/verifier
 3. **DevOps Engineer** - Infrastructure & deployment
 
 ### **Budget Estimate**
+
 - Development: $50k-150k
 - Security Audit: $50k-100k
 - Infrastructure: $5k-20k/month
@@ -117,11 +126,13 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## 🎓 **Learning Resources**
 
 ### **Required Reading**
+
 1. [Optimistic Rollups - Vitalik](https://vitalik.ca/general/2021/01/05/rollup.html)
 2. [EVM Deep Dive](https://ethereum.org/en/developers/docs/evm/)
 3. [Merkle Trees](https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/)
 
 ### **Reference Implementations**
+
 - [Optimism](https://github.com/ethereum-optimism/optimism)
 - [Arbitrum](https://github.com/OffchainLabs/arbitrum)
 - [Polygon zkEVM](https://github.com/0xPolygonHermez)
@@ -131,13 +142,15 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## 📊 **Success Metrics**
 
 ### **Technical KPIs**
+
 - [ ] 100% test coverage on smart contracts
 - [ ] <$0.01 per transaction on L2
-- [ ] >1000 TPS (transactions per second)
+- [ ] > 1000 TPS (transactions per second)
 - [ ] <2 second transaction confirmation
 - [ ] 99.9% uptime
 
 ### **Business KPIs**
+
 - [ ] $1M+ TVL in first month
 - [ ] 1000+ daily active users
 - [ ] 10+ DApps integrated
@@ -148,12 +161,14 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## ⚠️ **Risk Management**
 
 ### **High Risk Items**
+
 1. **Smart Contract Bugs** → Mitigate with audit
 2. **Sequencer Centralization** → Plan for decentralization
 3. **L1 Gas Spikes** → Implement gas price optimization
 4. **Low Adoption** → Partner with existing DApps
 
 ### **Contingency Plans**
+
 - Keep 6 months runway in reserve
 - Have bug bounty program ready
 - Maintain emergency pause functionality
@@ -164,6 +179,7 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## 🏁 **Definition of Done**
 
 ### **For MVP Launch:**
+
 - ✅ All smart contracts audited
 - ✅ 90%+ test coverage
 - ✅ Testnet running 30+ days without issues
@@ -178,6 +194,7 @@ StateManager → Sequencer → Bridge → Tests → Testnet
 ## 📞 **Getting Started Today**
 
 ### **Step 1: Set Up Development Environment**
+
 ```bash
 # Already done ✓
 cd /Users/nrahal/@code_2025/eth-layer2-lone
@@ -186,6 +203,7 @@ cd contracts && npx hardhat test
 ```
 
 ### **Step 2: Start Building StateManager**
+
 ```bash
 # Create the file
 touch sequencer/src/StateManager.ts
@@ -195,6 +213,7 @@ touch sequencer/src/StateManager.ts
 ```
 
 ### **Step 3: Join Community**
+
 ```bash
 # Set up Discord/Telegram for team communication
 # Create project board on GitHub
