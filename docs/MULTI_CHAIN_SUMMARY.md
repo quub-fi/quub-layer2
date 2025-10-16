@@ -7,6 +7,7 @@ Build the **first truly chain-agnostic Layer 2** that can settle on multiple blo
 ## 🔥 The Problem
 
 Current Layer 2 solutions:
+
 - **Locked to Ethereum**: Can't escape high gas fees
 - **Single Point of Failure**: Network congestion affects everyone
 - **No Flexibility**: Can't optimize for cost vs. security tradeoffs
@@ -39,13 +40,13 @@ Gaming transactions
 
 ## 📊 Expected Impact
 
-| Metric | Current | Multi-Chain | Improvement |
-|--------|---------|-------------|-------------|
-| Avg Settlement Cost | $50 | $10 | **80% cheaper** |
-| Settlement Time | 15s | 5s | **3x faster** |
-| Uptime | 99% | 99.99% | **Higher reliability** |
-| Throughput | 1000 TPS | 3000+ TPS | **3x more capacity** |
-| Chain Options | 1 | 3-5+ | **Full flexibility** |
+| Metric              | Current  | Multi-Chain | Improvement            |
+| ------------------- | -------- | ----------- | ---------------------- |
+| Avg Settlement Cost | $50      | $10         | **80% cheaper**        |
+| Settlement Time     | 15s      | 5s          | **3x faster**          |
+| Uptime              | 99%      | 99.99%      | **Higher reliability** |
+| Throughput          | 1000 TPS | 3000+ TPS   | **3x more capacity**   |
+| Chain Options       | 1        | 3-5+        | **Full flexibility**   |
 
 ## 🏗️ Architecture
 
@@ -81,28 +82,36 @@ Gaming transactions
 ## 🔧 Key Components
 
 ### 1. Chain Adapters
+
 Standardized interface for each blockchain:
+
 - Submit batches
 - Verify proofs
 - Estimate costs
 - Check chain health
 
 ### 2. Settlement Router
+
 The brain of the system:
+
 - Monitors all connected chains
 - Scores chains based on multiple factors
 - Selects optimal settlement location
 - Falls back if primary chain fails
 
 ### 3. Multi-Chain State Manager
+
 Keeps everything synchronized:
+
 - Global state root
 - Per-chain state roots
 - Cross-chain message passing
 - Fraud proof system
 
 ### 4. Universal Bridge
+
 Single interface for all chains:
+
 - Deposit from any chain
 - Withdraw to any chain
 - Cross-chain token transfers
@@ -111,18 +120,21 @@ Single interface for all chains:
 ## 💰 Business Benefits
 
 ### For Users
+
 - ✅ Lower transaction costs (80%+ savings)
 - ✅ Faster confirmations
 - ✅ More reliable service
 - ✅ Same UX regardless of settlement chain
 
 ### For Developers
+
 - ✅ Single API for all chains
 - ✅ No chain-specific code needed
 - ✅ Automatic optimization
 - ✅ Future-proof architecture
 
 ### For the Protocol
+
 - ✅ Competitive advantage (first mover)
 - ✅ Higher user adoption
 - ✅ More transaction volume
@@ -131,6 +143,7 @@ Single interface for all chains:
 ## 🚀 Implementation Plan
 
 ### Phase 1: Foundation (2 weeks)
+
 ```typescript
 ✓ Design chain adapter interface
 ✓ Wrap existing Ethereum code
@@ -139,6 +152,7 @@ Single interface for all chains:
 ```
 
 ### Phase 2: Multi-Chain (2 weeks)
+
 ```typescript
 □ Deploy BSC settlement contract
 □ Implement BSC adapter
@@ -148,6 +162,7 @@ Single interface for all chains:
 ```
 
 ### Phase 3: Intelligence (2 weeks)
+
 ```typescript
 □ Cost-optimized routing
 □ Speed-optimized routing
@@ -157,6 +172,7 @@ Single interface for all chains:
 ```
 
 ### Phase 4: Integration (2 weeks)
+
 ```typescript
 □ Universal bridge system
 □ Cross-chain withdrawals
@@ -168,17 +184,20 @@ Single interface for all chains:
 ## 📈 Success Criteria
 
 **Technical:**
+
 - [ ] Support 3+ chains (Ethereum, BSC, Polygon)
 - [ ] <30s settlement time on all chains
 - [ ] 99.99% uptime
 - [ ] <1% failed settlements
 
 **Economic:**
+
 - [ ] Average 50%+ cost savings vs Ethereum-only
 - [ ] Process 1000+ TPS aggregate
 - [ ] $1M+ TVL across all chains
 
 **Adoption:**
+
 - [ ] 10+ dApps integrated
 - [ ] 1000+ daily active users
 - [ ] Positive community feedback
@@ -186,25 +205,33 @@ Single interface for all chains:
 ## 🛡️ Risk Mitigation
 
 ### Risk 1: Chain-Specific Vulnerabilities
+
 **Mitigation:**
+
 - Security audits for each chain
 - Different security thresholds per chain
 - Fraud proof system on all chains
 
 ### Risk 2: State Inconsistency
+
 **Mitigation:**
+
 - Merkle proof verification
 - Regular cross-chain checkpoints
 - Global fraud challenge period
 
 ### Risk 3: Liquidity Fragmentation
+
 **Mitigation:**
+
 - Cross-chain liquidity pools
 - Automated rebalancing
 - Liquidity provider incentives
 
 ### Risk 4: Increased Complexity
+
 **Mitigation:**
+
 - Abstract complexity in SDK
 - Comprehensive testing
 - Gradual rollout (one chain at a time)
@@ -212,49 +239,51 @@ Single interface for all chains:
 ## 🎓 Technical Deep Dives
 
 ### Routing Algorithm
+
 ```typescript
 function selectOptimalChain(batch: Batch): ChainId {
-  const scores = chains.map(chain => {
+  const scores = chains.map((chain) => {
     const cost = estimateGasCost(chain, batch);
     const time = getFinalizationTime(chain);
     const load = getChainLoad(chain);
     const security = getSecurityScore(chain);
-    
+
     return {
       chainId: chain.id,
-      score: (
-        (1/cost) * 0.4 +      // 40% weight on cost
-        (1/time) * 0.3 +      // 30% weight on speed
-        (1-load) * 0.2 +      // 20% weight on availability
-        security * 0.1        // 10% weight on security
-      )
+      // 10% weight on security
+      score:
+        (1 / cost) * 0.4 + // 40% weight on cost
+        (1 / time) * 0.3 + // 30% weight on speed
+        (1 - load) * 0.2 + // 20% weight on availability
+        security * 0.1,
     };
   });
-  
-  return scores.sort((a,b) => b.score - a.score)[0].chainId;
+
+  return scores.sort((a, b) => b.score - a.score)[0].chainId;
 }
 ```
 
 ### State Synchronization
+
 ```solidity
 contract MultiChainSettlement {
   // Each chain maintains local state
   bytes32 public localStateRoot;
-  
+
   // Reference to other chains
   mapping(uint256 => bytes32) public remoteStateRoots;
-  
+
   function submitBatch(
     bytes32 batchRoot,
     bytes calldata proof
   ) external {
     // Update local state
     localStateRoot = newStateRoot;
-    
+
     // Emit event for cross-chain sync
     emit StateUpdated(block.chainid, newStateRoot);
   }
-  
+
   function syncRemoteState(
     uint256 remoteChainId,
     bytes32 remoteStateRoot,
@@ -262,7 +291,7 @@ contract MultiChainSettlement {
   ) external {
     // Verify proof
     require(verifyProof(proof), "Invalid proof");
-    
+
     // Update remote state reference
     remoteStateRoots[remoteChainId] = remoteStateRoot;
   }
@@ -272,18 +301,21 @@ contract MultiChainSettlement {
 ## 🌍 Future Extensions
 
 ### Short-term (3-6 months)
+
 - Add Arbitrum, Optimism, Base
 - Implement intent-based routing
 - Cross-chain atomic operations
 - MEV protection
 
 ### Medium-term (6-12 months)
+
 - ZK-proof aggregation
 - Layer 3 support
 - Custom rollup chains
 - Advanced liquidity management
 
 ### Long-term (12+ months)
+
 - Support 10+ chains
 - AI-powered routing
 - Cross-rollup communication
@@ -299,21 +331,25 @@ contract MultiChainSettlement {
 ## 🤝 Team Responsibilities
 
 **Backend Engineers:**
+
 - Implement chain adapters
 - Build settlement router
 - Deploy contracts on each chain
 
 **Smart Contract Developers:**
+
 - Deploy settlement contracts
 - Cross-chain messaging
 - Bridge contracts
 
 **DevOps:**
+
 - Multi-chain monitoring
 - Node infrastructure
 - Automated deployments
 
 **QA/Testing:**
+
 - Cross-chain test scenarios
 - Load testing on all chains
 - Security testing

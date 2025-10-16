@@ -7,6 +7,7 @@ A complete Layer 2 blockchain network implementation featuring an Optimistic Rol
 Unlike traditional Layer 2s that are locked to Ethereum, **Quub can settle on multiple blockchains** (Ethereum, BSC, Polygon, Arbitrum, etc.) based on cost, speed, and security requirements.
 
 ### Key Benefits
+
 - ⚡ **80%+ Cost Savings**: Automatically route to the cheapest available chain
 - 🔄 **High Availability**: If one chain is congested, use another
 - 🎯 **Flexibility**: Choose security vs. cost tradeoffs
@@ -37,6 +38,7 @@ ETH BSC POL ARB ... (Multiple chains)
 ```
 
 **Routing based on:**
+
 - Gas costs (choose cheapest)
 - Chain congestion (avoid busy chains)
 - Transaction type (DeFi → Ethereum, Gaming → Polygon)
@@ -183,18 +185,21 @@ npm run deploy:testnet
 Detailed documentation is available in the `/docs` folder:
 
 ### Core Documentation
+
 - [Architecture Overview](docs/architecture.md)
 - [API Reference](docs/api.md)
 - [Deployment Guide](docs/deployment.md)
 - [Developer Guide](docs/development.md)
 
 ### Multi-Chain Settlement 🌟 NEW
+
 - [**Executive Summary**](docs/MULTI_CHAIN_SUMMARY.md) - Start here for overview
 - [**Technical Architecture**](docs/MULTI_CHAIN_SETTLEMENT.md) - Deep dive into design
 - [**Implementation Guide**](docs/IMPLEMENTATION_GUIDE.md) - Step-by-step code walkthrough
 - [**Architecture Diagrams**](docs/diagrams/) - Visual representations
 
 ### Diagrams
+
 - [System Architecture](docs/diagrams/05_system_architecture.puml)
 - [Multi-Chain Comparison](docs/diagrams/07_multi_chain_comparison.puml)
 - [Settlement Router Flow](docs/diagrams/08_settlement_router_flow.puml)

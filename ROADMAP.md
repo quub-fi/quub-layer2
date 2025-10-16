@@ -233,6 +233,7 @@ touch sequencer/src/StateManager.ts
 ### **Why Multi-Chain?**
 
 Traditional Layer 2s are locked to a single settlement layer (usually Ethereum). This creates:
+
 - ❌ High costs when Ethereum gas is expensive
 - ❌ No flexibility in settlement location
 - ❌ Single point of congestion
@@ -266,16 +267,19 @@ Traditional Layer 2s are locked to a single settlement layer (usually Ethereum).
 ### **Key Benefits**
 
 1. **Cost Optimization** (40-90% savings)
+
    - Automatically route to cheapest chain
    - Avoid Ethereum during high gas periods
    - Batch multiple L2 batches for efficiency
 
 2. **Redundancy & Reliability**
+
    - If one chain is congested, use another
    - No single point of failure
    - Continuous operation guaranteed
 
 3. **User Choice**
+
    - Users can specify preferred settlement chain
    - DeFi apps can choose high-security (Ethereum)
    - Gaming apps can choose low-cost (Polygon/BSC)
@@ -288,24 +292,28 @@ Traditional Layer 2s are locked to a single settlement layer (usually Ethereum).
 ### **Implementation Phases**
 
 #### **Phase 1: Foundation (Weeks 1-2)**
+
 - [ ] Create chain adapter interface
 - [ ] Implement Ethereum adapter (wrap existing code)
 - [ ] Build settlement router core
 - [ ] Design multi-chain state tree
 
 #### **Phase 2: Multi-Chain (Weeks 3-4)**
+
 - [ ] Implement BSC adapter
 - [ ] Implement Polygon adapter
 - [ ] Deploy settlement contracts on BSC & Polygon
 - [ ] Test dual-chain settlement
 
 #### **Phase 3: Routing Intelligence (Weeks 5-6)**
+
 - [ ] Cost-optimized routing strategy
 - [ ] Speed-optimized routing strategy
 - [ ] Balanced routing strategy
 - [ ] Real-time chain condition monitoring
 
 #### **Phase 4: Cross-Chain Features (Weeks 7-8)**
+
 - [ ] Cross-chain bridge integration
 - [ ] Unified withdrawal system
 - [ ] Cross-chain state synchronization
@@ -314,12 +322,14 @@ Traditional Layer 2s are locked to a single settlement layer (usually Ethereum).
 ### **Technical Components**
 
 1. **Chain Adapters** (`sequencer/src/settlement/`)
+
    - `IChainAdapter.ts` - Interface for all chains
    - `EthereumAdapter.ts` - Ethereum implementation
    - `BSCAdapter.ts` - BSC implementation
    - `PolygonAdapter.ts` - Polygon implementation
 
 2. **Settlement Router** (`sequencer/src/settlement/`)
+
    - `SettlementRouter.ts` - Main routing logic
    - `RoutingStrategy.ts` - Strategy patterns
    - `ChainMetrics.ts` - Chain performance tracking
@@ -379,17 +389,17 @@ if (highValue || defi) {
 ## 🎓 **Learning Resources**
 
 ### Multi-Chain Technologies
+
 - LayerZero: https://layerzero.network/
 - Axelar: https://axelar.network/
 - Chainlink CCIP: https://chain.link/cross-chain
 - Hyperlane: https://hyperlane.xyz/
 
 ### Rollup Technologies
+
 - Optimism Specs: https://community.optimism.io/
 - Arbitrum Docs: https://docs.arbitrum.io/
 - zkSync Docs: https://docs.zksync.io/
-
-
 
 ---
 

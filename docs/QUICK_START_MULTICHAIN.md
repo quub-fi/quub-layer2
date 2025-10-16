@@ -80,6 +80,7 @@ npx hardhat run scripts/deploy.js --network mumbai
 ### Step 4: Create Chain Adapters (Already Done!)
 
 The code is already in `sequencer/src/settlement/`:
+
 - ✅ `IChainAdapter.ts` - Interface
 - ✅ `EthereumAdapter.ts` - Ethereum adapter
 - ✅ `BSCAdapter.ts` - BSC adapter
@@ -150,7 +151,7 @@ npm run stats:settlements
 #   Polygon: 78 (78%)
 #   BSC: 15 (15%)
 #   Ethereum: 7 (7%)
-# 
+#
 # Average cost: $3.50
 # vs Ethereum-only: $55.00
 # Savings: 93.6%
@@ -242,6 +243,7 @@ npm run test:load
 **Problem**: Can't connect to any chains
 
 **Solution**:
+
 ```bash
 # Check RPC endpoints
 curl $ETH_RPC_URL
@@ -257,6 +259,7 @@ curl $POLYGON_RPC_URL
 **Problem**: Transaction reverted on chain
 
 **Solution**:
+
 ```bash
 # Check contract deployment
 npx hardhat verify --network sepolia $ETH_SETTLEMENT_CONTRACT
@@ -270,6 +273,7 @@ npx hardhat verify --network sepolia $ETH_SETTLEMENT_CONTRACT
 **Problem**: Not getting expected savings
 
 **Solution**:
+
 ```bash
 # Check gas prices on all chains
 npm run check:gas-prices
@@ -312,26 +316,31 @@ Now that your multi-chain L2 is running:
 ```
 [Settlement Router] Analyzing batch #42...
 ```
+
 Router is evaluating options
 
 ```
 Ethereum: score 45.2, cost $50, time 15s
 ```
+
 Ethereum scored 45.2/100 (moderate)
 
 ```
 Polygon: score 85.3, cost $2, time 2s ✓✓ SELECTED
 ```
+
 Polygon scored 85.3/100 (excellent) and was chosen
 
 ```
 Batch settled! tx: 0xabc123...
 ```
+
 Success! Transaction confirmed on-chain
 
 ```
 Cost: $2 (96% cheaper than Ethereum!)
 ```
+
 Actual cost and savings vs. Ethereum-only approach
 
 ## 🔍 Verify It's Working
@@ -339,6 +348,7 @@ Actual cost and savings vs. Ethereum-only approach
 ### Check On-Chain
 
 Visit block explorers:
+
 - Ethereum: https://sepolia.etherscan.io/address/YOUR_CONTRACT
 - BSC: https://testnet.bscscan.com/address/YOUR_CONTRACT
 - Polygon: https://mumbai.polygonscan.com/address/YOUR_CONTRACT
@@ -361,6 +371,7 @@ npm run verify:state
 You now have a working multi-chain Layer 2! 🚀
 
 Your L2 can:
+
 - ✅ Settle on 3 different chains
 - ✅ Automatically choose the cheapest option
 - ✅ Save 80-95% on gas costs

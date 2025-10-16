@@ -10,7 +10,7 @@ start
 
 partition "Chain Analysis" {
   :Query all connected chains;
-  
+
   fork
     :Check Ethereum\nGas: $100\nTime: 15s\nLoad: 85%;
   fork again
