@@ -1,0 +1,83 @@
+@startuml
+!theme blueprint
+title Multi-Chain Settlement Router Decision Flow
+
+start
+
+:Sequencer creates batch of transactions;
+
+:Settlement Router analyzes batch;
+
+partition "Chain Analysis" {
+  :Query all connected chains;
+  
+  fork
+    :Check Ethereum\nGas: $100\nTime: 15s\nLoad: 85%;
+  fork again
+    :Check BSC\nGas: $5\nTime: 3s\nLoad: 40%;
+  fork again
+    :Check Polygon\nGas: $2\nTime: 2s\nLoad: 30%;
+  fork again
+    :Check Arbitrum\nGas: $10\nTime: 5s\nLoad: 50%;
+  end fork
+}
+
+:Calculate scores for each chain;
+
+note right
+  **Scoring Algorithm**
+  score = cost_score * 0.4
+        + speed_score * 0.3
+        + load_score * 0.2
+        + security_score * 0.1
+end note
+
+:Rank chains by score;
+
+if (User has preference?) then (yes)
+  :Use user's preferred chain;
+else (no)
+  if (High-value DeFi transaction?) then (yes)
+    :Force Ethereum\n(highest security);
+  else (no)
+    :Select highest-scoring chain;
+  endif
+endif
+
+:Submit batch to selected chain;
+
+fork
+  :Wait for confirmation;
+  :Update local state;
+fork again
+  :Broadcast state update\nto other chains;
+  :Sync cross-chain state;
+end fork
+
+:Log settlement result;
+
+note right
+  **Metrics Tracked:**
+  • Chain used
+  • Cost paid
+  • Time taken
+  • Success/failure
+  • Cost savings vs Ethereum
+end note
+
+if (Settlement successful?) then (yes)
+  :Mark batch as settled;
+  stop
+else (no)
+  :Log failure;
+  if (Retry attempts < 3?) then (yes)
+    :Select next best chain;
+    :Retry settlement;
+  else (no)
+    :Alert operators;
+    :Manual intervention required;
+    stop
+  endif
+endif
+
+@enduml
