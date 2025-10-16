@@ -7,11 +7,13 @@ Your multi-chain Layer 2 is now **ready for testnet deployment**! All infrastruc
 ## 📋 What's Been Configured
 
 ### Networks Ready
+
 - ✅ **Ethereum Sepolia** - Testnet ready
 - ✅ **BSC Testnet** - RPC verified, ready to deploy
 - ✅ **Polygon Amoy** - RPC verified, ready to deploy
 
 ### Infrastructure Complete
+
 - ✅ Smart contracts compiled
 - ✅ Deployment scripts ready
 - ✅ Multi-chain settlement router implemented
@@ -25,21 +27,25 @@ Your multi-chain Layer 2 is now **ready for testnet deployment**! All infrastruc
 ### Option A: Quick Test with Generated Wallet (Recommended for Testing)
 
 **Generate a test wallet:**
+
 ```bash
 cd contracts
 node generate-wallet.js
 ```
 
 This will:
+
 - Create a new wallet with private key
 - Show you the address
 - Provide faucet links to get testnet tokens
 
 **Then fund it:**
+
 - BSC Testnet: https://testnet.bnbchain.org/faucet-smart
 - Polygon Amoy: https://faucet.polygon.technology/
 
 **Update your `.env`:**
+
 ```bash
 # Copy the private key from generate-wallet.js output
 # Edit contracts/.env and paste it
@@ -48,6 +54,7 @@ nano contracts/.env
 ```
 
 **Deploy:**
+
 ```bash
 cd contracts
 ./deploy-multichain.sh
@@ -56,6 +63,7 @@ cd contracts
 ### Option B: Use Your Existing Wallet
 
 **If you have a funded testnet wallet:**
+
 ```bash
 # Edit contracts/.env
 nano contracts/.env
@@ -63,6 +71,7 @@ nano contracts/.env
 ```
 
 **Deploy:**
+
 ```bash
 cd contracts
 ./deploy-multichain.sh
@@ -93,22 +102,26 @@ npx hardhat run scripts/deploy.js --network polygonAmoy
 ## 🔧 Verification Commands
 
 **Check your setup:**
+
 ```bash
 cd contracts
 ./verify-setup.sh
 ```
 
 **Test Hardhat:**
+
 ```bash
 npx hardhat test
 ```
 
 **Compile contracts:**
+
 ```bash
 npx hardhat compile
 ```
 
 **Check network configs:**
+
 ```bash
 npx hardhat run scripts/check-networks.js
 ```
@@ -116,12 +129,14 @@ npx hardhat run scripts/check-networks.js
 ## 💰 Getting Testnet Tokens
 
 ### BSC Testnet BNB
+
 1. Visit: https://testnet.bnbchain.org/faucet-smart
 2. Connect wallet or paste address
 3. Request 0.1 BNB (enough for deployments)
 4. Wait ~10 seconds
 
 ### Polygon Amoy MATIC
+
 1. Visit: https://faucet.polygon.technology/
 2. Select "Polygon Amoy" network
 3. Paste your address
@@ -129,6 +144,7 @@ npx hardhat run scripts/check-networks.js
 5. Wait ~30 seconds
 
 ### Ethereum Sepolia ETH
+
 1. Visit: https://sepoliafaucet.com/
 2. Or: https://www.alchemy.com/faucets/ethereum-sepolia
 3. Request 0.5 ETH
@@ -186,6 +202,7 @@ npm run example:multichain
 ```
 
 This will:
+
 - Connect to all 3 chains
 - Analyze settlement options
 - Show cost comparison
@@ -194,12 +211,15 @@ This will:
 ### 3. Verify on Block Explorers
 
 **BSC Testnet:**
+
 - https://testnet.bscscan.com/address/0xYOUR_CONTRACT
 
 **Polygon Amoy:**
+
 - https://amoy.polygonscan.com/address/0xYOUR_CONTRACT
 
 **Ethereum Sepolia:**
+
 - https://sepolia.etherscan.io/address/0xYOUR_CONTRACT
 
 ### 4. Test End-to-End
@@ -213,6 +233,7 @@ npm run dev
 ## 🎯 Expected Costs
 
 **Deployment Costs (per chain):**
+
 - BSC Testnet: ~$0.10 USD (0.001 BNB)
 - Polygon Amoy: ~$0.05 USD (0.05 MATIC)
 - Ethereum Sepolia: ~$2-5 USD (0.002 ETH)
@@ -222,6 +243,7 @@ npm run dev
 ## 🔍 Troubleshooting
 
 ### "Insufficient funds for gas"
+
 ```bash
 # Get more testnet tokens from faucets
 # BSC: https://testnet.bnbchain.org/faucet-smart
@@ -229,6 +251,7 @@ npm run dev
 ```
 
 ### "Network not configured"
+
 ```bash
 # Verify hardhat.config.js has the networks
 # Check contracts/.env has RPC URLs
@@ -236,6 +259,7 @@ cat contracts/.env
 ```
 
 ### "Contract deployment failed"
+
 ```bash
 # Check gas limits in hardhat.config.js
 # Try deploying to one network at a time
@@ -243,6 +267,7 @@ npx hardhat run scripts/deploy.js --network bscTestnet
 ```
 
 ### "RPC unreachable"
+
 ```bash
 # Test RPC connections
 ./verify-setup.sh
@@ -278,6 +303,7 @@ npx hardhat run scripts/deploy.js --network bscTestnet
 ## 🎊 Success Criteria
 
 You'll know it's working when:
+
 - ✅ Contracts deployed on multiple chains
 - ✅ Sequencer connects to all chains
 - ✅ Batch analysis shows different costs per chain
@@ -288,17 +314,20 @@ You'll know it's working when:
 ## 🚀 Ready to Deploy?
 
 **Final check:**
+
 ```bash
 cd contracts
 ./verify-setup.sh
 ```
 
 **If all green, deploy:**
+
 ```bash
 ./deploy-multichain.sh
 ```
 
 **Or generate a test wallet first:**
+
 ```bash
 node generate-wallet.js
 # Fund the address
@@ -311,6 +340,7 @@ node generate-wallet.js
 ## 📞 Need Help?
 
 **Check these first:**
+
 1. `./verify-setup.sh` - Verify your configuration
 2. `contracts/SETUP_GUIDE.md` - Detailed setup instructions
 3. `contracts/DEPLOYMENT_GUIDE.md` - Deployment walkthrough

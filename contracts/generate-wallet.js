@@ -3,7 +3,7 @@
 /**
  * Generate a test wallet for multi-chain deployment
  * This creates a new Ethereum wallet with a private key
- * 
+ *
  * ⚠️  IMPORTANT: Only use this wallet for testing!
  */
 

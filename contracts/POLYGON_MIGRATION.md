@@ -10,21 +10,23 @@ We've updated the project to use **Polygon Amoy testnet**, which is the official
 
 ### What Changed
 
-| Old (Mumbai) | New (Amoy) |
-|--------------|------------|
-| Chain ID: 80001 | Chain ID: 80002 |
+| Old (Mumbai)                   | New (Amoy)                       |
+| ------------------------------ | -------------------------------- |
+| Chain ID: 80001                | Chain ID: 80002                  |
 | RPC: rpc-mumbai.maticvigil.com | RPC: rpc-amoy.polygon.technology |
-| Deprecated ❌ | Active ✅ |
+| Deprecated ❌                  | Active ✅                        |
 
 ### Quick Start with Amoy
 
 1. **Get Test MATIC**
+
    - Visit: https://faucet.polygon.technology/
    - Select "Polygon Amoy"
    - Enter your wallet address
    - Get free testnet MATIC
 
 2. **Update Your Wallet**
+
    - **Network Name**: Polygon Amoy Testnet
    - **RPC URL**: https://rpc-amoy.polygon.technology/
    - **Chain ID**: 80002
@@ -32,10 +34,11 @@ We've updated the project to use **Polygon Amoy testnet**, which is the official
    - **Block Explorer**: https://amoy.polygonscan.com/
 
 3. **Deploy Contracts**
+
    ```bash
    # Use 'amoy' network (recommended)
    npx hardhat run scripts/deploy.js --network amoy
-   
+
    # OR use 'mumbai' (which now points to Amoy)
    npx hardhat run scripts/deploy.js --network mumbai
    ```
@@ -89,18 +92,22 @@ https://polygon-amoy.infura.io/v3/YOUR_KEY
 ### Troubleshooting
 
 **"Network amoy doesn't exist"**
+
 - Update hardhat.config.js (already done in this project)
 
 **"Insufficient funds"**
+
 - Get test MATIC from faucet: https://faucet.polygon.technology/
 
 **"RPC unreachable"**
+
 - Try alternative RPC endpoints above
 - Check your internet connection
 
 ### For Documentation Updates
 
 All documentation has been updated to reference Polygon Amoy instead of Mumbai:
+
 - ✅ hardhat.config.js
 - ✅ .env.example
 - ✅ README files

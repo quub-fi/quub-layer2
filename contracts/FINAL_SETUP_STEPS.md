@@ -15,19 +15,22 @@
 You need a wallet with a private key for deploying contracts.
 
 **Option A: Create a new wallet (recommended for testing)**
+
 ```bash
 # Use this Node.js script to generate a new wallet
 node -e "const ethers = require('ethers'); const wallet = ethers.Wallet.createRandom(); console.log('Address:', wallet.address); console.log('Private Key:', wallet.privateKey);"
 ```
 
 **Option B: Export from MetaMask**
+
 1. Open MetaMask
 2. Click the 3 dots → Account Details
 3. Click "Export Private Key"
 4. Enter password
 5. Copy the private key
 
-⚠️ **IMPORTANT**: 
+⚠️ **IMPORTANT**:
+
 - Use a TEST wallet only (not your main wallet)
 - Never commit the `.env` file with real keys
 - Add `.env` to `.gitignore` (already done)
@@ -54,16 +57,19 @@ PRIVATE_KEY=abc123def456...
 You need testnet tokens on both chains:
 
 #### BSC Testnet (BNB)
+
 - Faucet 1: https://testnet.bnbchain.org/faucet-smart
 - Faucet 2: https://www.bnbchain.org/en/testnet-faucet
 - Amount needed: ~0.1 BNB (for gas)
 
 #### Polygon Amoy (MATIC)
+
 - Faucet 1: https://faucet.polygon.technology/
 - Faucet 2: https://www.alchemy.com/faucets/polygon-amoy
 - Amount needed: ~0.5 MATIC (for gas)
 
 **How to use faucets:**
+
 1. Copy your wallet address (from Step 1)
 2. Visit faucet website
 3. Paste your address
@@ -87,6 +93,7 @@ You should see: ✓ All checks passed!
 ```
 
 This will:
+
 - Deploy to BSC Testnet
 - Deploy to Polygon Amoy
 - Save addresses to `deployed-addresses.json`
@@ -117,16 +124,19 @@ After deployment, copy the contract addresses to your sequencer config:
 Once contracts are deployed, you can:
 
 1. **Test the settlement router**:
+
 ```bash
 cd ../sequencer
 npm run example:multichain
 ```
 
 2. **Verify contracts on block explorers**:
+
 - BSC Testnet: https://testnet.bscscan.com/
 - Polygon Amoy: https://www.oklink.com/amoy
 
 3. **Start using multi-chain settlement**:
+
 - Update your sequencer to use the router
 - Watch it automatically choose the cheapest chain
 - Save 80-95% on costs!
@@ -134,15 +144,18 @@ npm run example:multichain
 ## 💡 Tips
 
 **If you see "insufficient funds":**
+
 - Check balances: https://testnet.bscscan.com/address/YOUR_ADDRESS
 - Get more from faucets (links above)
 
 **If deployment fails:**
+
 - Check your private key is correct (no 0x prefix)
 - Ensure you have enough testnet tokens
 - Try again (sometimes RPCs are slow)
 
 **If you want to deploy to more chains:**
+
 - Add network config to `hardhat.config.js`
 - Add RPC URL to `.env`
 - Update `deploy-multichain.sh`
