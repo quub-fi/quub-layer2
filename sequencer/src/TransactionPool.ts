@@ -1,4 +1,4 @@
-import { keccak256 } from "keccak";
+import { createHash } from "crypto";
 
 export interface Transaction {
   hash: string;
@@ -199,7 +199,8 @@ export class TransactionPool {
     const data = `${tx.to}${tx.value.toString()}${tx.data}${
       tx.gasLimit
     }${tx.gasPrice.toString()}${tx.nonce}${timestamp}`;
-    return "0x" + keccak256(Buffer.from(data)).toString("hex");
+    const hash = createHash("sha256").update(data).digest("hex");
+    return "0x" + hash;
   }
 
   /**

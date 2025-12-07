@@ -9,7 +9,7 @@ import { RollupSubmitter } from "./RollupSubmitter";
 export class SequencerService {
   private app: express.Application;
   private server: any;
-  private wss: WebSocket.Server;
+  private wss?: WebSocket.Server;
 
   private provider: ethers.Provider;
   private wallet: ethers.Wallet;
@@ -99,7 +99,7 @@ export class SequencerService {
       } catch (error) {
         res.status(400).json({
           success: false,
-          error: error.message,
+          error: error instanceof Error ? error.message : String(error),
         });
       }
     });
@@ -135,14 +135,15 @@ export class SequencerService {
       } catch (error) {
         res.status(500).json({
           success: false,
-          error: error.message,
+          error: error instanceof Error ? error.message : String(error),
         });
       }
     });
   }
 
   private setupWebSocket(): void {
-    this.wss = new WebSocket.Server({ port: this.config.port + 1 });
+    const wsPort = parseInt(process.env.WS_PORT || String(this.config.port + 1));
+    this.wss = new WebSocket.Server({ port: wsPort });
 
     this.wss.on("connection", (ws) => {
       console.log("New WebSocket connection established");
@@ -246,6 +247,8 @@ export class SequencerService {
   }
 
   private broadcastStateUpdate(stateRoot: string): void {
+    if (!this.wss) return;
+
     const message = JSON.stringify({
       type: "state_update",
       data: {
